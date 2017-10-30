@@ -752,7 +752,7 @@ private float airControlFactor = 2.0f;                                          
                 moveDir = Vector3.zero;                                         // and moveDir too because it's affected by previous runningToJumpingImpulse
 
                 // Turn the camera
-                wallturnJumpRotation = Quaternion.AngleAxis(180f, Vector3.up) * transform.rotation ; // compute wallturnjump quaternion 180° rotation and store it 
+                wallturnJumpRotation = Quaternion.AngleAxis(180f, transform.up) * transform.rotation ; // compute wallturnjump quaternion 180° rotation and store it 
                                                                                                      // for smooth camera slerp during updateJump()
 
                 // Setting up the impulse vector for the wallclimbturn jump
