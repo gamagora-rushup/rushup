@@ -175,7 +175,7 @@ public class parkourFPSController : MonoBehaviour
         // Need to be called during Update because it's relative to the current frame.
         inputHorizontal = CrossPlatformInputManager.GetAxis("Horizontal");
         inputVertical = CrossPlatformInputManager.GetAxis("Vertical");
-        inputJump = CrossPlatformInputManager.GetButtonDown("Jump");
+        inputJump = CrossPlatformInputManager.GetButton("Jump");
         inputSlide = CrossPlatformInputManager.GetButton("Slide");
         inputAttacking = CrossPlatformInputManager.GetButtonDown("Attack");
 
