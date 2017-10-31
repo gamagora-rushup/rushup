@@ -742,21 +742,7 @@ public class parkourFPSController : MonoBehaviour
             // Look up. Disabled for now.
             Quaternion lookDirection = Quaternion.LookRotation(hit.normal * -1);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookDirection, 3.5f * Time.deltaTime);
-            //TODO SMOOTH THIS !
-
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-            Debug.Log("wallclimbYMomentum : " + wallclimbYMomentum);
-
+            
             // Decrement wallclimbYMomentum
             wallclimbYMomentum -= wallclimbDecelerationFactor*Time.deltaTime;
             if (wallclimbYMomentum < 0)
@@ -767,26 +753,22 @@ public class parkourFPSController : MonoBehaviour
 
             // Move up 
             moveDir.y = transform.TransformDirection(Vector3.up).y * ((wallclimbYMomentum/wallclimbInitialYMomentum) * wallclimbMaxSpeed ); // go up * momentum * predetermined max speed
-                      
-//            moveDir += transform.TransformDirection(Vector3.up) * (wallclimbYMomentum/maxNominalSpeed);
-//            moveDir.Normalize();
 
-            if(inputJump)
+            if (inputJump)
             {
                 // Prepare wallturnjump 
                 runningToJumpingImpulse = Vector3.zero;                         // reset runningToJumpingImpulse in case player has been chaining the wallkicks
                 moveDir = Vector3.zero;                                         // and moveDir too because it's affected by previous runningToJumpingImpulse
 
                 // Turn the camera
-                wallturnJumpRotation = Quaternion.AngleAxis(180f, Vector3.up) * transform.rotation ; // compute wallturnjump quaternion 180° rotation and store it 
-                                                                                                     // for smooth camera slerp during updateJump()
+                wallturnJumpRotation = Quaternion.AngleAxis(180f, Vector3.up) * transform.rotation; // compute wallturnjump quaternion 180° rotation and store it 
+                                                                                                    // for smooth camera slerp during updateJump()
 
                 // Setting up the impulse vector for the wallclimbturn jump
-                wallclimbturnExitVector =  Quaternion.Euler(-wallclimbExitAngle,0,0) * hit.normal.normalized * wallclimbExitForce  ; 
+                wallclimbturnExitVector = Quaternion.AngleAxis(wallclimbExitAngle, Vector3.Cross(hit.normal, Vector3.up)) * hit.normal * wallclimbExitForce;
 
                 // Set up the wallkick animation timer for updateJumping()
                 isWallTurnJumping = wallturnjumpingExitAnimationTime;
-
                 stopWallClimb();
             }
 
