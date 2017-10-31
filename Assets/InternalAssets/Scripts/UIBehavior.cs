@@ -19,7 +19,7 @@ public class UIBehavior : MonoBehaviour
         debugZoneText = GameObject.Find ("DebugZone").GetComponent<UnityEngine.UI.Text>();
         timerText = GameObject.Find("Timer").GetComponent<UnityEngine.UI.Text>();
         SectionTimeTableText = GameObject.Find("SectionTimeTable").GetComponent<UnityEngine.UI.Text>();
-        triggeredZoneText = GameObject.Find("triggeredZoneText").GetComponent<UnityEngine.UI.Text>();
+        triggeredZoneText = GameObject.Find("TriggeredZoneText").GetComponent<UnityEngine.UI.Text>();
     }
 	
 	// Update is called once per frame
