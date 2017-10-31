@@ -23,4 +23,11 @@ public class TriggeredZoneBehavior : MonoBehaviour {
             UIBehavior.setTriggeredZoneText(text);
         }
     }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.name == "FPSController")
+        {
+            UIBehavior.setTriggeredZoneText("");
+        }
+    }
 }
