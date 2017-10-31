@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 /****
@@ -21,12 +23,12 @@ public class CheckpointBehavior : MonoBehaviour
     private bool active;                                                    // describe current checkpoint state, true if the player has to reach it
     private bool finalCheckpoint;                                           // true if there is no nextCheckpoint linked in the editor
     private bool triggered;                                                 // triggered if a player collide with its trigger
-    private static List<float> checkpointTimeTable= new List<float>();      // Contains player's time for each section of the track
+    private static List<float> checkpointTimeTable = new List<float>();      // Contains player's time for each section of the track
     private Renderer renderer = null;                                       // checkpoint's renderer used to change its look according to active state
     private UIBehavior ui;                                                  // ui is holding time value, we need to access it to save time per section value
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         ui = GameObject.Find("UI").GetComponent<UIBehavior>();
         if (ui == null)
@@ -37,17 +39,17 @@ public class CheckpointBehavior : MonoBehaviour
 
         restartCheckpoint = null;
 
-        if(firstCheckpoint)
+        if (firstCheckpoint)
             renderer.material = activeCheckpointMaterial;
 
-        if(nextCheckpoint == null)
+        if (nextCheckpoint == null)
             finalCheckpoint = true;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
-        if(active && triggered)
+        if (active && triggered)
         {
             // save times
             ui.getTime();
@@ -61,16 +63,24 @@ public class CheckpointBehavior : MonoBehaviour
             restartCheckpoint = this.gameObject;
 
             // active next checkpoint
-            if(!finalCheckpoint)
+            if (!finalCheckpoint)
+            {
                 nextCheckpoint.GetComponent<CheckpointBehavior>().activate();
+            }
             else
+            {
                 ui.printSectionTimeTable();
+                if(CrossPlatformInputManager.GetButton("e"))
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
+            }
         }
-	}
+    }
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.CompareTag("Player") && active)
+        if (col.gameObject.CompareTag("Player") && active)
         {
             triggered = true;
         }

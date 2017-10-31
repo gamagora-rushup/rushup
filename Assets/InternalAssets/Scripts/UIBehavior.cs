@@ -68,6 +68,8 @@ public class UIBehavior : MonoBehaviour
             SectionTimeTableText.text += timeEntry;
             sectionEntry++;
         }
+
+        SectionTimeTableText.text += "\n Press e to return to main menu";
     }
 
     public static void setTriggeredZoneText(string text)
