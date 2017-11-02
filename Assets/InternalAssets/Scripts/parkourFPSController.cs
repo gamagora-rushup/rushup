@@ -344,14 +344,11 @@ public class parkourFPSController : MonoBehaviour
 
     void updateRunning()
     {
-        // Update Camera look and freedom according to playerState
-        updateCamera();
-
-        // Reset previousWallWallran & previousWallWallclimbed value 
-
-         
         if(grounded)
         {
+            // Update Camera look and freedom according to playerState
+            updateCamera();
+
             // Make sure that our state is set (in case of falling of a clif => no jump but still been airborne for a while)
             playerState = PlayerState.running;
 
