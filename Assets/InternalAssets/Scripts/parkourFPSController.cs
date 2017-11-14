@@ -175,7 +175,7 @@ public class parkourFPSController : MonoBehaviour
         // Need to be called during Update because it's relative to the current frame.
         inputHorizontal = CrossPlatformInputManager.GetAxis("Horizontal");
         inputVertical = CrossPlatformInputManager.GetAxis("Vertical");
-        inputJump = CrossPlatformInputManager.GetButtonDown("Jump");
+        inputJump = CrossPlatformInputManager.GetButton("Jump");
         inputSlide = CrossPlatformInputManager.GetButton("Slide");
         inputAttacking = CrossPlatformInputManager.GetButtonDown("Attack");
 
@@ -344,14 +344,11 @@ public class parkourFPSController : MonoBehaviour
 
     void updateRunning()
     {
-        // Update Camera look and freedom according to playerState
-        updateCamera();
-
-        // Reset previousWallWallran & previousWallWallclimbed value 
-
-         
         if(grounded)
         {
+            // Update Camera look and freedom according to playerState
+            updateCamera();
+
             // Make sure that our state is set (in case of falling of a clif => no jump but still been airborne for a while)
             playerState = PlayerState.running;
 
